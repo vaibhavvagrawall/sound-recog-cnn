@@ -1,0 +1,328 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sound Classification</title>
+    <style>
+        :root {
+            --primary: #6366f1;
+            --primary-hover: #4f46e5;
+            --secondary: #10b981;
+            --dark: #1e293b;
+            --light: #f8fafc;
+            --gray: #e2e8f0;
+            --shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background-color: #f1f5f9;
+            color: var(--dark);
+            line-height: 1.6;
+            padding: 20px;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        .container {
+            width: 100%;
+            max-width: 800px;
+            background: var(--light);
+            border-radius: 16px;
+            box-shadow: var(--shadow);
+            overflow: hidden;
+        }
+        
+        header {
+            background: linear-gradient(135deg, var(--primary), #818cf8);
+            padding: 40px 30px;
+            text-align: center;
+        }
+        
+        h1 {
+            color: white;
+            font-size: 32px;
+            font-weight: 700;
+            margin-bottom: 12px;
+        }
+        
+        .subtitle {
+            color: rgba(255, 255, 255, 0.85);
+            font-size: 16px;
+            font-weight: 400;
+        }
+        
+        .content {
+            padding: 40px 30px;
+        }
+        
+        .upload-container {
+            background-color: #f8fafc;
+            border: 2px dashed #cbd5e1;
+            border-radius: 12px;
+            padding: 40px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-bottom: 30px;
+            position: relative;
+        }
+        
+        .upload-container:hover {
+            border-color: var(--primary);
+            background-color: #f1f5f9;
+        }
+        
+        .upload-icon {
+            font-size: 40px;
+            color: var(--primary);
+            margin-bottom: 15px;
+        }
+        
+        .file-input {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            opacity: 0;
+            cursor: pointer;
+        }
+        
+        .upload-text {
+            font-weight: 500;
+            margin-bottom: 8px;
+        }
+        
+        .file-hint {
+            color: #64748b;
+            font-size: 14px;
+        }
+        
+        .selected-file {
+            display: none;
+            background: #f1f5f9;
+            padding: 12px 20px;
+            border-radius: 8px;
+            margin-top: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        
+        .file-name {
+            font-weight: 500;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+        
+        .submit-btn {
+            background-color: var(--primary);
+            color: white;
+            border: none;
+            padding: 16px 32px;
+            font-size: 16px;
+            font-weight: 600;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            width: 100%;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        
+        .submit-btn:hover {
+            background-color: var(--primary-hover);
+            transform: translateY(-2px);
+        }
+        
+        .result {
+            margin-top: 40px;
+            text-align: center;
+            padding: 30px;
+            background: linear-gradient(135deg, #ecfdf5, #d1fae5);
+            border-radius: 12px;
+            display: none;
+        }
+        
+        .result.visible {
+            display: block;
+            animation: fadeIn 0.5s ease;
+        }
+        
+        .result-icon {
+            font-size: 40px;
+            color: var(--secondary);
+            margin-bottom: 10px;
+        }
+        
+        .result-title {
+            font-size: 24px;
+            font-weight: 700;
+            color: var(--secondary);
+            margin-bottom: 5px;
+        }
+        
+        .result-description {
+            color: #047857;
+            font-size: 16px;
+        }
+        
+        .audio-wave {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 60px;
+            margin: 30px 0;
+        }
+        
+        .bar {
+            width: 6px;
+            background-color: var(--primary);
+            margin: 0 3px;
+            border-radius: 3px;
+            animation: wave 1.5s ease-in-out infinite;
+        }
+        
+        @keyframes wave {
+            0%, 100% {
+                height: 10px;
+            }
+            50% {
+                height: 50px;
+            }
+        }
+        
+        .bar:nth-child(1) { animation-delay: 0.1s; }
+        .bar:nth-child(2) { animation-delay: 0.2s; }
+        .bar:nth-child(3) { animation-delay: 0.3s; }
+        .bar:nth-child(4) { animation-delay: 0.4s; }
+        .bar:nth-child(5) { animation-delay: 0.5s; }
+        .bar:nth-child(6) { animation-delay: 0.4s; }
+        .bar:nth-child(7) { animation-delay: 0.3s; }
+        .bar:nth-child(8) { animation-delay: 0.2s; }
+        .bar:nth-child(9) { animation-delay: 0.1s; }
+        
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        @media (max-width: 600px) {
+            .content {
+                padding: 30px 20px;
+            }
+            
+            .upload-container {
+                padding: 30px 15px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Sound Classification</h1>
+            <p class="subtitle">Upload an audio file to identify the urban sound</p>
+        </header>
+        
+        <div class="content">
+            <form method="post" enctype="multipart/form-data" id="uploadForm">
+                <div class="upload-container" id="uploadContainer">
+                    <div class="upload-icon">📁</div>
+                    <p class="upload-text">Drag & drop an audio file or click to browse</p>
+                    <p class="file-hint">Supports MP3 and WAV formats</p>
+                    <input type="file" name="file" accept=".mp3,.wav" required class="file-input" id="fileInput">
+                </div>
+                
+                <div class="selected-file" id="selectedFile" style="display: none;">
+                    <span class="file-name" id="fileName">No file selected</span>
+                    <span style="color: #ef4444; cursor: pointer;" id="removeFile">✕</span>
+                </div>
+                
+                <button type="submit" class="submit-btn">Analyze Sound</button>
+            </form>
+            
+            <div class="audio-wave" id="audioWave" style="display: none;">
+                <div class="bar"></div>
+                <div class="bar"></div>
+                <div class="bar"></div>
+                <div class="bar"></div>
+                <div class="bar"></div>
+                <div class="bar"></div>
+                <div class="bar"></div>
+                <div class="bar"></div>
+                <div class="bar"></div>
+            </div>
+            
+            <div id="resultContainer" class="result" data-has-prediction="{{ prediction|default('false') }}">
+                <div class="result-icon">🔊</div>
+                <h2 class="result-title" id="predictionResult">{{ prediction|default('') }}</h2>
+                <p class="result-description">Sound classification complete</p>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        const fileInput = document.getElementById('fileInput');
+        const fileName = document.getElementById('fileName');
+        const selectedFile = document.getElementById('selectedFile');
+        const removeFile = document.getElementById('removeFile');
+        const uploadForm = document.getElementById('uploadForm');
+        const audioWave = document.getElementById('audioWave');
+        const resultContainer = document.getElementById('resultContainer');
+        
+        // Check if we have a prediction already
+        const hasPrediction = resultContainer.getAttribute('data-has-prediction') !== 'false';
+        
+        if (hasPrediction) {
+            resultContainer.classList.add('visible');
+        }
+        
+        fileInput.addEventListener('change', function() {
+            if (this.files && this.files[0]) {
+                fileName.textContent = this.files[0].name;
+                selectedFile.style.display = 'flex';
+            }
+        });
+        
+        removeFile.addEventListener('click', function() {
+            fileInput.value = '';
+            selectedFile.style.display = 'none';
+        });
+        
+        uploadForm.addEventListener('submit', function(e) {
+            // Only prevent form submission and simulate prediction in demo mode
+            if (!hasPrediction) {
+                e.preventDefault();
+                audioWave.style.display = 'flex';
+                
+                // Simulate processing delay
+                setTimeout(function() {
+                    audioWave.style.display = 'none';
+                    resultContainer.classList.add('visible');
+                    // This is just for demo, in the real app the prediction would come from the backend
+                    const sounds = ["Street Music", "Car Horn", "Children Playing", "Dog Bark", "Siren", "Air Conditioner", "Engine Idling", "Gunshot", "Jackhammer", "Drilling"];
+                    document.getElementById('predictionResult').textContent = sounds[Math.floor(Math.random() * sounds.length)];
+                }, 2000);
+            }
+        });
+    </script>
+</body>
+</html>
