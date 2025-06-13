@@ -132,11 +132,6 @@ Feel free to fork this repository and submit a pull request to improve the app!
 
 ## 👨‍💻 Author
 
-**Anshuman Kumar**
-[LinkedIn](https://linkedin.com/in/anshuman-kumar-372702282) • [GitHub](https://github.com/anshumankumar2021)
-
-**Chirag Ranasaria**
-[LinkedIn](https://linkedin.com/in/chirag-ranasaria-203281241) • [GitHub](https://github.com/Chirag9697)
-
-**Vaibhav Agrawal**  
-[LinkedIn](https://linkedin.com/in/vaibhavvagrawall) • [GitHub](https://github.com/vaibhavvagrawall)
+**Anshuman Kumar** [LinkedIn](https://linkedin.com/in/anshuman-kumar-372702282) • [GitHub](https://github.com/anshumankumar2021)  
+**Chirag Ranasaria** [LinkedIn](https://linkedin.com/in/chirag-ranasaria-203281241) • [GitHub](https://github.com/Chirag9697)  
+**Vaibhav Agrawal** [LinkedIn](https://linkedin.com/in/vaibhavvagrawall) • [GitHub](https://github.com/vaibhavvagrawall)
