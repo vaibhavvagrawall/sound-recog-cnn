@@ -56,14 +56,18 @@ The model can classify audio into the following 10 urban sound categories:
 
 ```
 urban-sound-classification/
-├── app.py                       # Flask backend
-├── weights.best.basic_cnn.keras # Trained model
+├── pycache/                          # Python cache
+├── app.py                            # Flask backend
+├── utils.py                          # Helper functions for prediction
+├── UrbanSound8K.csv                  # Dataset CSV file
+├── Urban_Sound_Classification.ipynb  # Model training notebook
+├── weights.best.basic_cnn.keras      # Trained CNN model
 ├── templates/
-│   └── index.html               # Frontend UI
-├── static/
+│   └── index.html                    # Frontend UI
+├── uploads/
 │   └── (uploaded audio files)
-├── requirements.txt             # Dependencies
-└── README.md                    # Project documentation
+├── requirements.txt                  # Dependencies
+└── README.md                         # Project documentation
 ```
 
 ---
@@ -76,23 +80,12 @@ git clone https://github.com/your-username/urban-sound-classification.git
 cd urban-sound-classification
 ```
 
-2. **Create a virtual environment** (optional but recommended)
-```bash
-python -m venv venv
-source venv/bin/activate  # On Windows: venv\Scripts\activate
-```
-
-3. **Install dependencies**
-```bash
-pip install -r requirements.txt
-```
-
-4. **Run the Flask app**
+2. **Run the Flask app**
 ```bash
 python app.py
 ```
 
-5. **Visit the app in your browser**
+3. **Visit the app in your browser**
 ```
 http://127.0.0.1:5000/
 ```
