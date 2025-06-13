@@ -6,7 +6,7 @@ A Flask-based web application that classifies urban sounds (like sirens, dog bar
 
 ## 🚀 Demo
 
-> Upload an audio file (`.wav`, `.mp3`, etc.) and get an instant prediction of the sound category!
+Upload an audio file (`.wav`, `.mp3`, etc.) and get an instant prediction of the sound category!
 
 ---
 
